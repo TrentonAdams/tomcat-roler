@@ -28,10 +28,10 @@ function showhelp()
   printf "\t               for multiple domains.\n"
   printf "\t-r|--roles     the comma separated tomcat roles available for \n"
   printf "\t               that domain.\n"
-  printf "\t-n|--new       if given, the ou=Groups,ou=vhostname,ou=tomcat \n"
+  printf "\t-n|--new       if given, the ou=roles,ou=vhostname,ou=tomcat \n"
   printf "\t               will be created, along with a manager account \n"
   printf "\t               with random password.  The manager account\n"
-  printf "\t               will be in all groups, as groups require a member\n"
+  printf "\t               will be in all roles, as roles require a member\n"
   printf "e.g. $0 -b dc=example,dc=com -r tomcat,manager-gui,manager-script,admin-gui \\ \n"
   printf "\t-v customer-domain -n \n"
   echo ${roles[@]}
@@ -78,15 +78,15 @@ sn: Account
 cn: Manager Account
 userPassword: {MD5}$(uuidgen | md5sum)
 
-dn: ou=groups,ou=$vhname,ou=tomcat,$basedn
+dn: ou=roles,ou=$vhname,ou=tomcat,$basedn
 objectClass: organizationalUnit
-ou: groups
+ou: roles
 "
 fi;
 
 for role in "${roles[@]}"; do 
   tomcatldif+="
-dn: cn=$role,ou=groups,ou=$vhname,ou=tomcat,$basedn
+dn: cn=$role,ou=roles,ou=$vhname,ou=tomcat,$basedn
 objectClass: groupOfUniqueNames
 cn: $role
 uniqueMember: uid=manager,ou=$vhname,ou=tomcat,$basedn

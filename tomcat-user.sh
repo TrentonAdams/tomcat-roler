@@ -52,7 +52,7 @@ read -r -p 'Enter first name: ' fn
 read -r -p 'Enter last name: ' ln
 
 userldif="
-dn: uid=$user,ou=People,dc=adamsbros,dc=org
+dn: uid=$user,$basedn
 cn: $fn $ln
 givenName: $fn
 sn: $ln
@@ -65,7 +65,7 @@ uid: $user
 
 for role in "${roles[@]}"; do 
   roleldif+="
-dn: cn=$role,$basedn
+dn: cn=$role,ou=roles,$basedn
 changetype: modify
 add: uniqueMember
 uniqueMember: uid=$user,$basedn
@@ -73,5 +73,5 @@ uniqueMember: uid=$user,$basedn
 done;
 
 
-echo "$roleldif"
 echo "$userldif"
+echo "$roleldif"
