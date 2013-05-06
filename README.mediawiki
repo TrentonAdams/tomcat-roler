@@ -1,0 +1,5 @@
+=tomcat-roler=
+
+This script is for generating a role structure in LDAP for use with apache tomcat.
+
+For information on how to configure tomcat to use this structure, please refer to the [http://tomcat.apache.org/tomcat-7.0-doc/realm-howto.html#JNDIRealm JNDIRealm] documentation on the [http://tomcat.apache.org apache tomcat site].
